@@ -1,0 +1,38 @@
+:host {
+  flex-grow: 6;
+  background: azure;
+  padding: 12px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  min-width: 800px;
+}
+
+.table__row {
+  display: flex;
+}
+
+.table__row:not(:last-child) {
+  border-bottom: 1px solid black;
+}
+
+.table__ceil {
+  display: flex;
+  justify-content: center;
+  flex-basis: 25%;
+}
+
+.table__ceil:not(:last-child) {
+  border-right: 1px solid black;
+  display: flex;
+  justify-content: center;
+  flex-basis: 25%;
+}
+
+.table__header {
+  display: flex;
+  font-weight: bold;
+}

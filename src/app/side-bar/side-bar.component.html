@@ -1,0 +1,74 @@
+<button *ngIf="generateIsShown"
+        (click)="generateTable()">
+  GENERATE TABLE
+</button>
+
+<ng-container *ngIf="!generateIsShown">
+  <div class="title">
+    Here you can add new user
+  </div>
+
+  <div class="user-form">
+    <div class="user-field">
+      <span class="user-label">
+        First name
+      </span>
+
+      <input type="text"
+             (keyup)="setUserField($event, 'name')">
+    </div>
+
+    <div class="user-field">
+      <span class="user-label">
+        Surname
+      </span>
+
+      <input type="text"
+             (keyup)="setUserField($event, 'surname')">
+    </div>
+
+    <div class="user-field">
+      <span class="user-label">
+        Age
+      </span>
+
+      <input type="number"
+             (keyup)="setUserField($event, 'age')">
+    </div>
+
+    <div class="user-field">
+      <span class="user-label">
+        E-mail
+      </span>
+
+      <input type="text"
+             (keyup)="setUserField($event, 'email')">
+    </div>
+
+    <div class="user-field user-field__submit">
+      <button (click)="addUser()">
+        Add new user
+      </button>
+    </div>
+  </div>
+
+  <div class="title">
+    Here you can remove user by email
+  </div>
+
+  <div class="user-form">
+    <div class="user-field">
+      <span class="user-label">
+        E-mail
+      </span>
+
+      <input type="text" #removeEmail>
+    </div>
+
+    <div class="user-field user-field__submit">
+      <button (click)="removeUser(removeEmail.value)">
+        Remove user
+      </button>
+    </div>
+  </div>
+</ng-container>

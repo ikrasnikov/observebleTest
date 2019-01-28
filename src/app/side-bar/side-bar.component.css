@@ -1,0 +1,38 @@
+:host {
+  flex-grow: 1;
+  display: flex;
+  background: aqua;
+  padding: 12px;
+  border-right: 1px solid black;
+  flex-direction: column;
+  max-width: 250px;
+}
+
+.title {
+  height: 50px;
+}
+
+.user-form:not(:last-child) {
+  margin-bottom: 36px;
+  border-bottom: 2px solid black;
+}
+
+.user-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.user-field__submit {
+  display: flex;
+  align-items: flex-end;
+  margin: 24px 0;
+}
+
+.user-field__submit-button {
+  width: 100px;
+}
+
+.user-label {
+  margin-bottom: 6px;
+}

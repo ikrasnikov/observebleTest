@@ -1,0 +1,39 @@
+<div *ngIf="users.length"
+     class="table">
+  <div class="table__header table__row">
+    <div class="table__ceil">
+      Name
+    </div>
+
+    <div class="table__ceil">
+      Surname
+    </div>
+
+    <div class="table__ceil">
+      Age
+    </div>
+
+    <div class="table__ceil">
+      Email
+    </div>
+  </div>
+
+  <div *ngFor="let user of users"
+       class="table__row">
+    <div class="table__ceil">
+      {{ user.name }}
+    </div>
+
+    <div class="table__ceil">
+      {{ user.surname }}
+    </div>
+
+    <div class="table__ceil">
+      {{ user.age }}
+    </div>
+
+    <div class="table__ceil">
+      {{ user.email }}
+    </div>
+  </div>
+</div>
