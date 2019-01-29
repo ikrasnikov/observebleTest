@@ -1,9 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { catchError, filter, map, takeUntil, tap } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
 
 import { UserService } from '../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-table',
@@ -12,7 +13,9 @@ import { UserService } from '../services/user.service';
 })
 export class TableComponent implements OnDestroy {
 
-  public users = [];
+  public users: TUser[] = [];
+  public females: TUser[] = [];
+  public femalesYonger50: TUser[] = [];
 
 
   private _destroy$$ = new Subject();
@@ -23,10 +26,22 @@ export class TableComponent implements OnDestroy {
   ) {
     this._userService.getUsers()
       .pipe(
-        takeUntil(this._destroy$$)
+        tap((users: TUser[]) => {
+          this.users = users;
+        }),
+        map((users) => users.filter((user) => user.sex === 'female')),
+        tap((females) => {
+          this.females = females;
+        }),
+        filter((females) => females.some((female) => female.isActive)),
+        map((females) => females.filter((female) => female.age < 50)),
+        takeUntil(this._destroy$$),
+        catchError((error: HttpErrorResponse) => {
+          return of();
+        })
       )
-      .subscribe((users: TUser[]) => {
-        this.users = users;
+      .subscribe((femalesYonger50: TUser[]) => {
+        this.femalesYonger50 = femalesYonger50;
       });
   }
 
