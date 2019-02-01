@@ -4,7 +4,6 @@ import { catchError, filter, map, takeUntil, tap } from 'rxjs/operators';
 import { of, Subject } from 'rxjs';
 
 import { UserService } from '../services/user.service';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-table',
@@ -14,8 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class TableComponent implements OnDestroy {
 
   public users: TUser[] = [];
-  public females: TUser[] = [];
-  public femalesYonger50: TUser[] = [];
+  public newUsers: TUser[] = [];
 
 
   private _destroy$$ = new Subject();
@@ -24,28 +22,35 @@ export class TableComponent implements OnDestroy {
   constructor(
     private _userService: UserService,
   ) {
+    this._userService.getUsersFromAPI()
+      .subscribe((users: TUser[]) => {
+        this._userService.updateUsers(users);
+      });
+
     this._userService.getUsers()
       .pipe(
-        tap((users: TUser[]) => {
-          this.users = users;
-        }),
-        map((users) => users.filter((user) => user.sex === 'female')),
-        tap((females) => {
-          this.females = females;
-        }),
-        filter((females) => females.some((female) => female.isActive)),
-        map((females) => females.filter((female) => female.age < 50)),
-        takeUntil(this._destroy$$),
-        catchError((error: HttpErrorResponse) => {
-          return of();
-        })
+        takeUntil(this._destroy$$)
       )
-      .subscribe((femalesYonger50: TUser[]) => {
-        this.femalesYonger50 = femalesYonger50;
+      .subscribe((users: TUser[]) => {
+        this.users = users;
       });
   }
 
   public ngOnDestroy(): void {
     this._destroy$$.next();
+  }
+
+  public newSubscription(): void {
+    this._userService.getUsers()
+      .pipe(
+        takeUntil(this._destroy$$)
+      )
+      .subscribe((users: TUser[]) => {
+        this.newUsers = users;
+      });
+  }
+
+  public updateUsers(): void {
+    this._userService.updateUsers(this.users);
   }
 }
