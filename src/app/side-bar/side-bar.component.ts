@@ -22,16 +22,16 @@ export class SideBarComponent {
     this._newUser[fieldName] = event.target.value;
   }
 
-  public addUser() {
-    this._userService.addUser(this._newUser);
-  }
-
-  public removeUser(email) {
-    this._userService.removeUser(email);
-  }
-
-  public generateTable() {
-    this._userService.initData();
-    this.generateIsShown = !this.generateIsShown;
-  }
+  // public addUser() {
+  //   this._userService.addUser(this._newUser);
+  // }
+  //
+  // public removeUser(email) {
+  //   this._userService.removeUser(email);
+  // }
+  //
+  // public generateTable() {
+  //   this._userService.initData();
+  //   this.generateIsShown = !this.generateIsShown;
+  // }
 }
